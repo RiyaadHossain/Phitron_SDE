@@ -1,0 +1,1 @@
+# Inheriting parent class having many different attributes,methods in derived classes
