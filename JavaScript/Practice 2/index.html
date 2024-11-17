@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>MealDB</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Welcome to MealDB</h1>
+
+      <div class="card_details" id="card_details">
+      </div>
+
+      <div class="search_container">
+        <input
+          id="search_input"
+          class="search_input"
+          type="text"
+          placeholder="Type something..."
+        />
+        <button onclick="onHandleSearch(event)">Submit</button>
+      </div>
+
+      <div class="card_container" id="card_container">
+        
+        <div class="card"></div>
+      </div>
+    </div>
+
+    <script src="main.js"></script>
+  </body>
+</html>

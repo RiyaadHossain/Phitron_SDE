@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Player List</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Dream 11</h1>
+    </header>
+    <main>
+      <div class="content">
+        <div class="search_container">
+          <input
+            id="search_input"
+            class="search_input"
+            type="text"
+            placeholder="Type something..."
+          />
+          <button onclick="onHandleSearch(event)">Submit</button>
+        </div>
+        <div class="cards-container" id="playerCards"></div>
+      </div>
+      <div class="sidebar">
+        <p>Total Selected: <span id="selectedCount">0</span></p>
+        <h2>Selected Players</h2>
+        <ul id="selectedPlayersList"></ul>
+      </div>
+    </main>
+
+    <!-- Modal -->
+    <div class="modal" id="detailsModal">
+    </div>
+
+
+    <script src="script.js"></script>
+  </body>
+</html>
