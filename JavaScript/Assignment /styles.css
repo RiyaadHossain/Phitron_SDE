@@ -214,7 +214,7 @@ button:hover {
   margin-top: 5px;
 }
 
-.user-image img {
+.meal-image img {
   width: 150px;
   height: 150px;
   border-radius: 50%;
@@ -222,36 +222,36 @@ button:hover {
   border: 4px solid #007bff;
 }
 
-.user-details {
+.meal-details {
   text-align: center;
   margin-top: 20px;
 }
 
-.user-name {
+.meal-name {
   font-size: 24px;
   color: #333;
   margin: 0 0 10px;
 }
 
-.user-description {
+.meal-description {
   font-size: 14px;
   color: #666;
   margin: 0 0 15px;
 }
 
-.user-info {
+.meal-info {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.user-info li {
+.meal-info li {
   font-size: 14px;
   color: #555;
   margin-bottom: 8px;
 }
 
-.user-info strong {
+.meal-info strong {
   color: #333;
 }
 

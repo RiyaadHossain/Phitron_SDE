@@ -1,7 +1,7 @@
-let players = [];
-const playerCards = document.getElementById("playerCards");
+let meals = [];
+const mealCards = document.getElementById("mealCards");
 const search_input = document.getElementById("search_input");
-const selectedPlayersList = document.getElementById("selectedPlayersList");
+const selectedmealsList = document.getElementById("selectedmealsList");
 const selectedCount = document.getElementById("selectedCount");
 const detailsModal = document.getElementById("detailsModal");
 const handleOnClose = () => {
@@ -14,18 +14,18 @@ const onHandleSearch = async (e) => {
 
   const url =
     "https://www.themealdb.com/api/json/v1/1/search.php?s=" + search_text;
-  players = await fetch(url)
+  meals = await fetch(url)
     .then((res) => res.json())
     .then((res) => res.meals);
-  
-  console.log(players);
-  playerCards.innerHTML = ''
-  renderPlayers(players)
+
+  console.log(meals);
+  mealCards.innerHTML = "";
+  rendermeals(meals);
 };
 
 const showDetails = async (id) => {
   const url = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=" + id;
-  const player = await fetch(url)
+  const meal = await fetch(url)
     .then((res) => res.json())
     .then((res) => res.meals[0]);
 
@@ -40,17 +40,17 @@ const showDetails = async (id) => {
     strIngredient5,
     strInstructions,
     strMealThumb,
-  } = player;
+  } = meal;
   detailsModal.innerHTML = `
         <div class="modal-content">
         <span class="close-btn" id="closeModal" onclick="handleOnClose()">&times;</span>
-        <h2>Player Details</h2>
-        <div class="user-image">
-          <img src="${strMealThumb}" alt="User Image" />
+        <h2>meal Details</h2>
+        <div class="meal-image">
+          <img src="${strMealThumb}" alt="meal Image" />
         </div>
-        <div class="user-details">
-          <h2 class="user-name">${strMeal}</h2>
-          <p class="user-description">
+        <div class="meal-details">
+          <h2 class="meal-name">${strMeal}</h2>
+          <p class="meal-description">
           ${strInstructions.slice(0, 250)}
           </p>
           <ul class="ingrediant-info">
@@ -65,22 +65,22 @@ const showDetails = async (id) => {
       `;
 };
 
-const renderPlayers = (players) => {
-  if (!players) {
-    playerCards.innerHTML = `<h1>No Item Found</h1>`
-    return
+const rendermeals = (meals) => {
+  if (!meals) {
+    mealCards.innerHTML = `<h1>No Item Found</h1>`;
+    return;
   }
 
-  let selectedPlayers = [];
+  let selectedmeals = [];
 
-  function updateSelectedPlayers() {
-    selectedPlayersList.innerHTML = selectedPlayers
-      .map((player) => `<li>${player}</li>`)
+  function updateSelectedmeals() {
+    selectedmealsList.innerHTML = selectedmeals
+      .map((meal) => `<li>${meal}</li>`)
       .join("");
-    selectedCount.textContent = selectedPlayers.length;
+    selectedCount.textContent = selectedmeals.length;
   }
 
-  players.slice(0, 10).forEach((player) => {
+  meals.slice(0, 10).forEach((meal) => {
     const {
       strMeal,
       idMeal,
@@ -90,7 +90,7 @@ const renderPlayers = (players) => {
       strArea,
       strInstructions,
       strYoutube,
-    } = player;
+    } = meal;
 
     const card = document.createElement("div");
     card.className = "card";
@@ -122,27 +122,27 @@ const renderPlayers = (players) => {
         `;
 
     card.querySelector(".add-to-group").addEventListener("click", () => {
-      if (selectedPlayers.length > 11) {
+      if (selectedmeals.length > 11) {
         alert("You can't add more than 11 palyers");
         return;
       }
-      if (!selectedPlayers.includes(strMeal)) {
-        selectedPlayers.push(strMeal);
-        updateSelectedPlayers();
+      if (!selectedmeals.includes(strMeal)) {
+        selectedmeals.push(strMeal);
+        updateSelectedmeals();
       }
     });
     card.querySelector(".show-details").addEventListener("click", () => {
       showDetails(idMeal);
     });
-    playerCards.appendChild(card);
+    mealCards.appendChild(card);
   });
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
   const url = "https://www.themealdb.com/api/json/v1/1/search.php?s=a";
-  players = await fetch(url)
+  meals = await fetch(url)
     .then((res) => res.json())
     .then((res) => res.meals);
 
-  renderPlayers(players);
+  rendermeals(meals);
 });
