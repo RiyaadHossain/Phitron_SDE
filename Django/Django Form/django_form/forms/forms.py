@@ -17,9 +17,17 @@ class UploadFile(forms.Form):
 
 class Attr_Widget(forms.Form):
     name = forms.CharField(help_text="Enter your name", initial="Riyad")
+    email = forms.EmailField(help_text="Enter your email", validators=[validators.EmailValidator()])
     age = forms.CharField(widget=forms.NumberInput(attrs={'placeholder': "Enter your age", 'class': "border-primary"}))
     birthday = forms.DateField(widget=forms.DateInput(attrs={'type':'date'}))
     appointment = forms.DateTimeField(widget=forms.DateTimeInput(attrs={'type':'datetime-local'}))
+
+    CHOICES = [('male', 'male'), ('female', 'female')]
+    gender = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect)
+
+    COLOR = [("red", "Red"), ("green", "Green"), ("yellow", "Yellow")]
+    color = forms.MultipleChoiceField(choices=COLOR, widget=forms.CheckboxSelectMultiple)
+    check = forms.BooleanField(label="Agree Terms & Conditions")
 
 class Form_Validation(forms.Form):
     name = forms.CharField()

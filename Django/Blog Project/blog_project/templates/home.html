@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Welcome to our Blog </h1>
+    <div class="row mt-5">
+        {% for post in  posts%}
+        <div class="col-4">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{post.title}}</h5>
+                    <h6 class="card-subtitle mb-2 text-body-secondary">{{post.author}}</h6>
+                    <p class="card-text">{{post.content}}</p>
+                    <div class="my-2">
+                        {% for category in post.category.all %}
+                        <span class="badge text-bg-secondary">{{category.category_name}}</span>
+                        {% endfor %}
+                    </div>
+                    <a href="{% url 'edit_post_page' post.id %}" class="btn btn-warning">Edit</a>
+                    <a href="{% url 'delete_post_page' post.id %}" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
