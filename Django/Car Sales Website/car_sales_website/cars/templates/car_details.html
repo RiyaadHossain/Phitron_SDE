@@ -1,0 +1,58 @@
+{% extends "base.html" %} {% block content %} {% load crispy_forms_tags %}
+<div class="container pt-5">
+  <div style="max-width: 800px">
+    <img
+      src="{{car.image.url}}"
+      alt=""
+      class="rounded"
+      style="max-height: 500px"
+    />
+
+    <div class="d-flex mt-4 align-items-end justify-content-start gap-3">
+      <h2 class="mb-0">{{car.car_name}}</h2>
+      <p class="mb-0" style="font-size: 20px">${{car.price}}</p>
+      <small class="">({{car.quantity}}) items available </small>
+    </div>
+
+    <div class="mt-2">
+      {% if user.is_authenticated %} {% if car.quantity > 0 %}
+      <a href="{% url 'buy_car' car.id %}" class="btn btn-success">Buy Now</a>
+      {% else %}
+      <a href="" class="btn btn-disabled btn-danger">Stock Out</a>
+      {% endif %} {% endif %}
+    </div>
+
+    <p class="mt-2">{{car.description}}</p>
+
+    <div class="py-5">
+      <div style="" class="mx-auto mt-5 border rounded p-3">
+        <form method="post">
+          {% csrf_token %} {{ form | crispy }}
+          <button type="submit" class="btn btn-primary mt-2">
+            Make Comment
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="pb-5">
+      <h3 class="pb-3">All Comments:</h3>
+      <ol class="list-group">
+        {% for comment in comments.all %}
+        <li
+          class="list-group-item d-flex justify-content-between align-items-start"
+        >
+          <div class="ms-2 me-auto">
+            <div class="fw-bold">{{comment.commented_by}}</div>
+            {{comment.comment}}
+          </div>
+          <span class="badge text-bg-primary rounded-pill"
+            >{{comment.commented_at}}</span
+          >
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+</div>
+{% endblock content %}

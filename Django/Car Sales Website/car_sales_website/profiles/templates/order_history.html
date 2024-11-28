@@ -1,0 +1,20 @@
+{% extends "base.html" %} {% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container pt-5">
+    <h3>Your orders are here:</h3>
+
+      <div class="row">
+        {% for order  in orders %}
+          <div class="card w-50">
+            <div class="card-body">
+              <h5 class="card-title">{{order.car.car_name}}</h5>
+              <p class="card-text">{{order.car.price}}</p>
+              <a href="{% url 'car_details' order.car.id %}" class="btn btn-primary">Car Details</a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    
+  </div>
+{% endblock content %}
