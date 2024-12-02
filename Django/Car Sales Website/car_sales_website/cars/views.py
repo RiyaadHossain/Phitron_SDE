@@ -14,7 +14,6 @@ class CarListingView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['brands'] = Brand.objects.all()
-        print(Brand.objects.all())
         return context
     
     def get_queryset(self):

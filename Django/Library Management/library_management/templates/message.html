@@ -1,0 +1,23 @@
+{% if messages %} {% for msg in messages %}
+<div class="toast-container position-fixed top-0 end-0 p-3">
+  <div
+    class="toast show bg-{{msg.tags}}"
+    role="alert"
+    aria-live="assertive"
+    data-bs-autohide="false"
+    aria-atomic="true"
+  >
+    <div class="toast-header">
+      <strong class="me-auto">Library Management</strong>
+      <small>1 min ago</small>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="toast"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="toast-body">{{msg}}</div>
+  </div>
+</div>
+{% endfor %} {% endif %} 

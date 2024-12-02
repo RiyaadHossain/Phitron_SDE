@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div>
+        <h2 class="text-center my-2">Borrowing List</h2>
+        <table class="table border rounded">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Book Title</th>
+                <th scope="col">Borrowing Price</th>
+                <th scope="col">Balance After Borrow</th>
+                <th scope="col">Borrow Date</th>
+                <th scope="col">Return Date</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for borrow in borrowings %}
+              <tr>
+                    <th scope="row">{{borrow.id}}</th>
+                    <td>{{borrow.book.title}}</td>
+                    <td>{{borrow.book.borrowing_price}}</td>
+                    <td>{{borrow.balance_after_borrowing}}</td>
+                    <td>{{borrow.borrowing_date}}</td>
+                    <td>{{borrow.return_date|default:"Not Returned"}}</td>
+                    {% if borrow.return_date %}
+                        <td><button class="btn btn-danger" disabled="disabled">Already Returned</button></td>
+                    {% else %}
+                        <td><a href="{% url 'return_book' borrow.id %}" class="btn btn-danger">Return</button></td>
+                    {% endif %}
+                  </tr>
+                  {% endfor %}
+            </tbody>
+          </table>
+    </div>
+{% endblock content %}

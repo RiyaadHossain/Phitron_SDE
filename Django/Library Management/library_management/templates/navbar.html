@@ -1,0 +1,35 @@
+{% load humanize %}
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'homepage' %}">Library Management</a>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          {% if request.user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'booklist_page' %}">Book List</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'borrowinglist_page' %}">Borrow List</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'deposit_page' %}">Deposit</a>
+            </li>
+          {% endif %}
+        </ul>
+
+          {% if request.user.is_authenticated %}
+          <div class="d-flex align-items-center">
+            <p class="m-0 me-3 fw-bold text-white">{{ request.user.username|title }}: 
+              <span class="text-success">${{ request.user.profile.balance|floatformat:2|intcomma }}</span>
+            </p>
+            <a href="{% url 'logout_page' %}" class="btn btn-outline-danger">LogOut</a>
+          </div>
+        
+          {% else %}
+          <a href="{% url 'register_page' %}" class="btn btn-outline-success me-2" type="submit">Register</a>
+          <a href="{% url 'login_page' %}" class="btn btn-outline-primary" type="submit">LogIn</a>
+          {% endif %}
+      </div>
+    </div>
+  </nav>

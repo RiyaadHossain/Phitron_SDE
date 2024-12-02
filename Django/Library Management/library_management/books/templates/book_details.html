@@ -1,0 +1,57 @@
+{% extends "base.html" %} {% load crispy_forms_tags %}
+
+{% block content %}
+
+<div style="max-width: 800px">
+    <img
+      src="{{book.image.url}}"
+      alt=""
+      class="rounded"
+      style="max-height: 500px"
+    />
+
+     <div class="mt-4 ">
+      {% if user.is_authenticated %}
+      <a href="{% url 'borrow_book' book.id %}" class="btn btn-success">Borrow Now</a>
+      {% endif %}
+    </div> 
+
+    <div class="d-flex mt-2 align-items-end justify-content-start gap-3">
+      <h2 class="mb-0">{{book.title}}</h2>
+      <p class="mb-0" style="font-size: 20px">${{book.borrowing_price}}</p>
+    </div>
+
+    <p class="mt-2">{{book.description}}</p>
+
+    <div class="py-5">
+      <div style="" class="mx-auto mt-5 border rounded p-3">
+        <form method="post">
+          {% csrf_token %} {{ reviewForm | crispy }}
+          <button type="submit" class="btn btn-primary mt-2">
+            Make Review
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="pb-5">
+      <h3 class="pb-3">All Reviews:</h3>
+      <ol class="list-group">
+        {% for review in book.reviews.all %}
+        <li
+          class="list-group-item d-flex justify-content-between align-items-start"
+        >
+          <div class="ms-2 me-auto">
+            <div class="fw-bold">{{review.user.username|title}}</div>
+            {{review.review_text}}
+          </div>
+          <span class="badge text-bg-primary rounded-pill"
+            >{{review.timestamp}}</span
+          >
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+
+{% endblock content %}

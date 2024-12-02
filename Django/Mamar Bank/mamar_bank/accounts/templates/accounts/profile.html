@@ -11,7 +11,19 @@
 {% endfor %} {% endif %}
 <div class="bg-white px-3 py-4 rounded-xl my-6">
 
-    <h4 class="font-bold text-3xl text-left pb-5">Account NO: {{request.user.account.account_no}}</h4>
+    
+    <div class="flex justify-between items-center">
+      <h4 class="font-bold text-3xl text-left pb-5">
+        Account NO: {{request.user.account.account_no}}
+      </h4>
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        onclick="document.getElementById('update_password').scrollIntoView({ behavior: 'smooth' });"
+      >
+        Update Password
+      </button>
+    </div>
+
     <h1 class="font-bold text-3xl text-center pb-5">Update Profile Information</h1>
     <div class="w-full mt-10">
         <form method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -115,11 +127,47 @@
                 </div>
             </div>
             <div class="flex items-center justify-between">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                <button  name="form" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                     Update
                 </button>
             </div>
         </form>
+
+        <h1 id="update_password" class="font-bold text-3xl text-center py-5">Update Password</h1>
+        <form method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+          {% csrf_token %} {% for hidden_field in password_change_form.hidden_fields %} {{ hidden_field.errors }} {{ hidden_field }} {% endfor %}
+
+        <div class="w-full mb-6">
+            <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="{{ password_change_form.old_password.id_for_label }}">
+                {{ password_change_form.old_password.label }}
+            </label> {{ password_change_form.old_password }} {% if password_change_form.old_password.errors %} {% for error in password_change_form.old_password.errors %}
+            <p class="text-red-600 text-sm italic pb-2">{{ error }}</p>
+            {% endfor %} {% endif %}
+        </div>
+          <div class="flex flex-wrap -mx-3 mb-6">
+              <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                  <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="{{ password_change_form.new_password1.id_for_label }}">
+                      {{ password_change_form.new_password1.label }}
+                  </label> {{ password_change_form.new_password1 }} {% if password_change_form.new_password1.errors %} {% for error in password_change_form.new_password1.errors %}
+                  <p class="text-red-600 text-sm italic pb-2">{{ error }}</p>
+                  {% endfor %} {% endif %}
+              </div>
+              <div class="w-full md:w-1/2 px-3">
+                  <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="{{ password_change_form.new_password2.id_for_label }}">
+                      {{ password_change_form.new_password2.label }}
+                  </label> {{ password_change_form.new_password2 }} {% if password_change_form.new_password2.errors %} {% for error in password_change_form.new_password2.errors %}
+                  <p class="text-red-600 text-sm italic pb-2">{{ error }}</p>
+                  {% endfor %} {% endif %}
+              </div>
+          </div>
+
+          {% for hidden_field in password_change_form.hidden_fields %} {{ hidden_field.errors }} {{ hidden_field }} {% endfor %}
+          <div class="flex items-center justify-between">
+              <button name="password_change_form" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                  Update
+              </button>
+          </div>
+      </form>
     </div>
 </div>
 {% endblock %}

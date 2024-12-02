@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="p-3 border rounded w-50 mx-auto">
+        <h2 class="text-center">Deposit</h2>
+        <form action="" method="post" novalidate>
+            {% csrf_token %}
+            {{form|crispy}}
+            <button class="btn btn-primary">Deposit</button>
+        </form>
+    </div>
+{% endblock content %}

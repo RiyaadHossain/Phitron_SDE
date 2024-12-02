@@ -1,7 +1,9 @@
 
 from accounts.models import UserBankAccount
 from django import forms
+from django.db.models import Sum
 from .models import Transaction
+from core.models import Bank
 from .constants import MAX_TRANSACTION_BALANCE
 
 class TransactionForm(forms.ModelForm):
@@ -79,7 +81,7 @@ class WithdrawForm(TransactionForm):
     def clean_amount(self):
         account = self.account
         min_withdraw_amount = 500
-        max_withdraw_amount = 20000
+        max_withdraw_amount = 2000000
         balance = account.balance # 1000
         amount = self.cleaned_data.get('amount')
         if amount < min_withdraw_amount:
@@ -91,6 +93,10 @@ class WithdrawForm(TransactionForm):
             raise forms.ValidationError(
                 f'You can withdraw at most {max_withdraw_amount} $'
             )
+        
+        bank_reserve = Bank.objects.first().reserve_balance
+        if amount > bank_reserve:
+            raise forms.ValidationError("The bank is bankrupt. Unable to process the withdrawal.")
 
         if amount > balance: # amount = 5000, tar balance ache 200
             raise forms.ValidationError(
@@ -103,5 +109,10 @@ class WithdrawForm(TransactionForm):
 class LoanRequestForm(TransactionForm):
     def clean_amount(self):
         amount = self.cleaned_data.get('amount')
+                
+        bank_reserve = Bank.objects.first().reserve_balance
+        if amount > bank_reserve:
+            raise forms.ValidationError("The bank is bankrupt. Unable to process the withdrawal.")
+
 
         return amount
